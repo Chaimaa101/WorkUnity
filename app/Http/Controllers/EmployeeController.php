@@ -13,7 +13,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = Employee::all();
+
+        return view('pages.liste', ['employees' => $employees]);
     }
 
     /**
@@ -21,7 +23,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view("pages.add");
     }
 
     /**

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use App\Http\Requests\StoreEmployeeRequest;
-use App\Http\Requests\UpdateEmployeeRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
@@ -13,10 +13,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
-
-        return view('pages.liste', ['employees' => $employees]);
-    }
+        $employees = Employee::latest()->paginate(10);
+    
+        return view('home', ['employees' => $employees]);
+    } 
 
     /**
      * Show the form for creating a new resource.
@@ -29,17 +29,36 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEmployeeRequest $request)
-    {
-        //
+   public function store(Request $request)
+{
+    $info = $request->validate([
+        'firstName'   => ['required', 'string', 'min:3', 'max:255'],
+        'lastName'    => ['required', 'string', 'min:3', 'max:255'],
+        'email'       => ['required', 'email', 'unique:employees,email'],
+        'birthDate'   => ['required', 'date'],
+        'phoneNumber' => ['required', 'string', 'max:20'],
+        'job'         => ['required', 'string', 'min:3', 'max:255'],
+        'salary'      => ['required', 'numeric', 'min:0'],
+        'image'       => ['nullable', 'file', 'mimes:png,jpg'],
+    ]);
+
+    // handle upload
+    if ($request->hasFile('image')) {
+        $info['image'] = $request->file('image')->store('profiles', 'public');
     }
+
+    Employee::create($info);        
+
+    return redirect()->route('home')->with('success', 'Employé créer.');
+}
 
     /**
      * Display the specified resource.
      */
     public function show(Employee $employee)
     {
-        //
+        return view("pages.details",['employee' => $employee ]);
+        
     }
 
     /**
@@ -47,15 +66,32 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        return view("pages.update",['employee' => $employee ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEmployeeRequest $request, Employee $employee)
+    public function update(Request $request, Employee $employee)
     {
-        //
+         $info = $request->validate([
+        'firstName'   => ['required', 'string', 'min:3', 'max:255'],
+        'lastName'    => ['required', 'string', 'min:3', 'max:255'],
+        'email'       => ['required'],
+        'birthDate'   => ['required', 'date'],
+        'phoneNumber' => ['required', 'string', 'max:20'],
+        'job'         => ['required', 'string', 'min:3', 'max:255'],
+        'salary'      => ['required', 'numeric', 'min:0'],
+        'image'       => ['nullable', 'file', 'max:3000', 'mimes:png,jpg'],
+    ]);
+
+    if ($request->hasFile('image')) {
+        $info['image'] = $request->file('image')->store('profiles', 'public');
+    }
+
+    $employee->update($info);        
+
+    return redirect()->route('home')->with('success', 'Employé modifier.');
     }
 
     /**
@@ -63,6 +99,11 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+         if($employee->image){
+            Storage::disk('public')->delete($employee->image);
+        }
+        $employee->delete();
+        return redirect()->route('home')->with('success', 'Employé supprimer.');
+        
     }
 }

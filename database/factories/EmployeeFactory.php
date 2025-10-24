@@ -23,7 +23,6 @@ class EmployeeFactory extends Factory
              'birthDate' => fake()->date(),
              'phoneNumber' => fake()->phoneNumber(),
              'job' => fake()->jobTitle(),
-             'image' => fake()->imageUrl(),
              'salary' => fake()->numberBetween(1000,100000),
         ];
     }

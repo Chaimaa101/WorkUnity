@@ -1,9 +1,13 @@
 <x-layout>
-
+ @if (session('success'))
+    <div class="bg-green-100 text-green-800 px-4 py-2 rounded-md mb-4">
+        {{ session('success') }}
+    </div>
+@endif
     <div class="bg-white rounded-xl shadow-sm border border-gray-100">
         <div class="p-6 border-b border-gray-200">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-semibold text-gray-800">Gestion les employees</h3>
+                <h3 class="text-lg font-semibold text-gray-800">Gestion des employees</h3>
                 <a href="{{ route('employees.create') }}"
                     class="bg-rose-100 text-rose-900 px-4 py-2 rounded-lg hover:bg-rose-400 transition-colors">
                     <i class="fas fa-add"></i> Nouvel Employee
@@ -17,7 +21,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom
-                            Complet</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Poste</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email
                         </th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date
@@ -50,6 +54,9 @@
 
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $employee->firstName . ' ' . $employee->lastName }}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                {{ $employee->job }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {{ $employee->email }}

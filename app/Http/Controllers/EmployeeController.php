@@ -36,7 +36,7 @@ class EmployeeController extends Controller
         'lastName'    => ['required', 'string', 'min:3', 'max:255'],
         'email'       => ['required', 'email', 'unique:employees,email'],
         'birthDate'   => ['required', 'date'],
-        'phoneNumber' => ['required', 'string', 'max:20'],
+        'phoneNumber' => ['required','max:20'],
         'job'         => ['required', 'string', 'min:3', 'max:255'],
         'salary'      => ['required', 'numeric', 'min:0'],
         'image'       => ['nullable', 'file', 'mimes:png,jpg'],
@@ -79,10 +79,10 @@ class EmployeeController extends Controller
         'lastName'    => ['required', 'string', 'min:3', 'max:255'],
         'email'       => ['required'],
         'birthDate'   => ['required', 'date'],
-        'phoneNumber' => ['required', 'string', 'max:20'],
+        'phoneNumber' => ['required', 'max:20'],
         'job'         => ['required', 'string', 'min:3', 'max:255'],
         'salary'      => ['required', 'numeric', 'min:0'],
-        'image'       => ['nullable', 'file', 'max:3000', 'mimes:png,jpg'],
+        'image'       => ['nullable', 'file', 'mimes:png,jpg'],
     ]);
 
     if ($request->hasFile('image')) {
@@ -99,11 +99,11 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        
          if($employee->image){
             Storage::disk('public')->delete($employee->image);
         }
         $employee->delete();
         return redirect()->route('home')->with('success', 'Employé supprimer.');
-        
     }
 }

@@ -1,6 +1,10 @@
 <x-layout>
+    @if (session('success'))
+        <p class="text-sm font-medium text-white px-3 py-2 rounded-md mb-2 bg-green-300">{{ session('success') }}
+        </p>
+    @endif
+
     <div class="bg-gray-50 w-2/5 sm:w-3xl mx-auto">
-        {{-- enctype is REQUIRED for file uploads --}}
         <form class="p-8 space-y-6" action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
@@ -12,8 +16,8 @@
 
                     <input type="file" name="image" id="image" accept="image/*" class="hidden">
                     <label for="image"
-                        class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
-                        <span class="text-white text-sm font-medium">Change</span>
+                        class="absolute inset-0 flex items-center justify-center bg-gray-300 bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
+                        <span class="text-black text-sm font-medium">Change</span>
                     </label>
                 </div>
                 @error('image')

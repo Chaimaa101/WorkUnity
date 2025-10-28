@@ -1,23 +1,24 @@
 <x-layout>
     <div class="bg-gray-50 w-2/5 sm:w-3xl mx-auto">
-        {{-- enctype is REQUIRED for file uploads --}}
-        <form class="p-8 space-y-6" action="{{ route('employees.update',$employee) }}" method="POST" enctype="multipart/form-data">
-           @method('PUT')
-            @csrf
 
+        <form class="p-8 space-y-6" action="{{ route('employees.update', $employee) }}" method="POST"
+            enctype="multipart/form-data">
+            @method('PUT')
+            @csrf
             <div class="flex flex-col items-center">
                 <div class="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-lg">
- @if ($employee->image)
-                    <img src="{{ asset('/storage/'. $employee->image) }}" alt="mqhf"
-                        class="w-full h-full object-cover">
-                @else
-                    <img src="{{ asset('/storage/profiles/default.jpeg') }}" alt="mqhf"
-                       class="w-full h-full object-cover">
-                @endif
+                    @if ($employee->image)
+                        <img id="previewImage" src="{{ asset('/storage/' . $employee->image) }}" alt="photo"
+                            class="w-full h-full object-cover">
+                    @else
+                        <img id="previewImage" src="{{ asset('/storage/profiles/default.jpeg') }}" alt="default"
+                            class="w-full h-full object-cover">
+                    @endif
+
                     <input type="file" name="image" id="image" accept="image/*" class="hidden">
                     <label for="image"
-                        class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
-                        <span class="text-white text-sm font-medium">Change</span>
+                        class="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
+                        <span class="text-black text-sm font-medium">Change</span>
                     </label>
                 </div>
                 @error('image')
@@ -28,7 +29,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="text-rose-900 font-semibold">Nom <span class="text-red-500">*</span></label>
-                    <input type="text" name="firstName" value="{{ $employee->firstName}}"
+                    <input type="text" name="firstName" value="{{ $employee->firstName }}"
                         class="w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-rose-900">
                     @error('firstName')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
@@ -36,7 +37,7 @@
                 </div>
                 <div>
                     <label class="text-rose-900 font-semibold">Prénom <span class="text-red-500">*</span></label>
-                    <input type="text" name="lastName" value="{{ $employee->lastName}}"
+                    <input type="text" name="lastName" value="{{ $employee->lastName }}"
                         class="w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-rose-900">
                     @error('lastName')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
@@ -49,7 +50,7 @@
                 <label class=" text-rose-900 font-semibold mb-2">
                     Email <span class="text-red-500">*</span>
                 </label>
-                <input type="email" name="email"value="{{ $employee->email}}"
+                <input type="email" name="email"value="{{ $employee->email }}"
                     class="w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-rose-900" />
                 @error('email')
                     <p class="text-red-600 text-sm">{{ $message }}</p>
@@ -60,7 +61,7 @@
                 <label class=" text-rose-900 font-semibold mb-2">
                     Date de naissance <span class="text-red-500">*</span>
                 </label>
-                <input type="date" name="birthDate" value="{{ $employee->birthDate}}"
+                <input type="date" name="birthDate" value="{{ $employee->birthDate }}"
                     class="w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-rose-900" />
                 @error('birthDate')
                     <p class="text-red-600 text-sm">{{ $message }}</p>
@@ -71,7 +72,7 @@
                     <label class=" text-rose-900 font-semibold mb-2">
                         Téléphone <span class="text-red-500">*</span>
                     </label>
-                    <input type="number" name="phoneNumber" value="{{ $employee->phoneNumber}}"
+                    <input type="text" name="phoneNumber" value="{{ $employee->phoneNumber }}"
                         class="w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-rose-900" />
                     @error('phoneNumber')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
@@ -82,7 +83,7 @@
                     <label class=" text-rose-900 font-semibold mb-2">
                         Salaire <span class="text-red-500">*</span>
                     </label>
-                    <input type="number" name="salary" value="{{ $employee->salary}}"
+                    <input type="number" name="salary" value="{{ $employee->salary }}"
                         class="w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-rose-900" />
                     @error('salary')
                         <p class="text-red-600 text-sm">{{ $message }}</p>
@@ -95,7 +96,7 @@
                 <label class=" text-rose-900 font-semibold mb-2">
                     Poste <span class="text-red-500">*</span>
                 </label>
-                <input type="text" name="job" value="{{ $employee->job}}"
+                <input type="text" name="job" value="{{ $employee->job }}"
                     class="w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-rose-900" />
                 @error('job')
                     <p class="text-red-600 text-sm">{{ $message }}</p>
@@ -107,6 +108,4 @@
                 Modifier employé
             </button>
         </form>
-    </div>
-
-</x-layout>
+        < </x-layout>

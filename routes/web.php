@@ -16,17 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::redirect('/', 'employees')->name('home');
-Route::resource('employees', EmployeeController::class,);
-
-
-Route::get('/update', function () {
-    return view('update');
-})->name('update');
-
-
-Route::get('/details', function () {
-    return view('details');
-})->name('details');
-
+Route::get('/', [EmployeeController::class,'index'])->name('home');
+Route::resource('employees', EmployeeController::class);
 

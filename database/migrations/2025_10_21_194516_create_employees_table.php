@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date("birthDate");
             $table->string("phoneNumber");
             $table->string("job");
-            $table->string("image")->nullable()->default('profiles/default.jpeg');
+            $table->string("image")->nullable();
             $table->decimal("salary");
             $table->timestamps();
         });

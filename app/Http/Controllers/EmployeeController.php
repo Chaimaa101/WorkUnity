@@ -106,4 +106,8 @@ class EmployeeController extends Controller
         $employee->delete();
         return redirect()->route('home')->with('success', 'Employé supprimer.');
     }
+
+    public function listEmployees(){
+        return Employee::where('firstName','chaimaa')->get();
+    }
 }

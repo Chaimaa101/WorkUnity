@@ -19,3 +19,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [EmployeeController::class,'index'])->name('home');
 Route::resource('employees', EmployeeController::class);
 
+Route::get('/listEmployees', [EmployeeController::class ,'listEmployees']);
+
